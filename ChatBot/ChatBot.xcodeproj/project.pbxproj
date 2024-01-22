@@ -28,6 +28,14 @@
 		045DE5FF2B515B7D002B426C /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045DE5FE2B515B7D002B426C /* MessageCell.swift */; };
 		046C25182B5A485200B5696D /* MessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046C25172B5A485200B5696D /* MessageContentView.swift */; };
 		046C251A2B5A485F00B5696D /* MessageViewContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046C25192B5A485F00B5696D /* MessageViewContentConfiguration.swift */; };
+		04795F262B5E6ED900661599 /* CoreDataManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04795F252B5E6ED900661599 /* CoreDataManagable.swift */; };
+		04795F282B5E71B400661599 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04795F272B5E71B400661599 /* CoreDataManager.swift */; };
+		04795F322B5E799F00661599 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04795F302B5E799F00661599 /* Model.xcdatamodeld */; };
+		04795F372B5E7B0000661599 /* ChattingRoomEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04795F332B5E7B0000661599 /* ChattingRoomEntity+CoreDataClass.swift */; };
+		04795F382B5E7B0000661599 /* ChattingRoomEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04795F342B5E7B0000661599 /* ChattingRoomEntity+CoreDataProperties.swift */; };
+		04795F392B5E7B0000661599 /* MessageEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04795F352B5E7B0000661599 /* MessageEntity+CoreDataClass.swift */; };
+		04795F3A2B5E7B0000661599 /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04795F362B5E7B0000661599 /* MessageEntity+CoreDataProperties.swift */; };
+		04795F3C2B5E7BA600661599 /* ChattingRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04795F3B2B5E7BA600661599 /* ChattingRoomModel.swift */; };
 		04A9300A2B5523ED002E4819 /* MessageCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A930092B5523ED002E4819 /* MessageCellConfiguration.swift */; };
 		04A9300C2B55240B002E4819 /* MessageCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A9300B2B55240B002E4819 /* MessageCellContentView.swift */; };
 		04A9303F2B590F4E002E4819 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -64,6 +72,14 @@
 		045DE5FE2B515B7D002B426C /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		046C25172B5A485200B5696D /* MessageContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageContentView.swift; sourceTree = "<group>"; };
 		046C25192B5A485F00B5696D /* MessageViewContentConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewContentConfiguration.swift; sourceTree = "<group>"; };
+		04795F252B5E6ED900661599 /* CoreDataManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagable.swift; sourceTree = "<group>"; };
+		04795F272B5E71B400661599 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		04795F312B5E799F00661599 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		04795F332B5E7B0000661599 /* ChattingRoomEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChattingRoomEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		04795F342B5E7B0000661599 /* ChattingRoomEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChattingRoomEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		04795F352B5E7B0000661599 /* MessageEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		04795F362B5E7B0000661599 /* MessageEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		04795F3B2B5E7BA600661599 /* ChattingRoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingRoomModel.swift; sourceTree = "<group>"; };
 		04A930092B5523ED002E4819 /* MessageCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellConfiguration.swift; sourceTree = "<group>"; };
 		04A9300B2B55240B002E4819 /* MessageCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellContentView.swift; sourceTree = "<group>"; };
 		A60A086B2B4BFE410027A6F7 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
@@ -100,6 +116,7 @@
 		045295362B4BFCED000A5FD1 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				04795F222B5E6E7E00661599 /* CoreData */,
 				A60A086A2B4BFE340027A6F7 /* Extension */,
 				045295372B4BFCED000A5FD1 /* Network */,
 				045295402B4BFCED000A5FD1 /* JSONCoder */,
@@ -235,6 +252,45 @@
 				045DE5F82B510DDA002B426C /* UIView+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		04795F222B5E6E7E00661599 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				04795F2F2B5E799200661599 /* Model */,
+				04795F242B5E6EB700661599 /* Implementation */,
+				04795F232B5E6E8800661599 /* Interface */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		04795F232B5E6E8800661599 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				04795F252B5E6ED900661599 /* CoreDataManagable.swift */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		04795F242B5E6EB700661599 /* Implementation */ = {
+			isa = PBXGroup;
+			children = (
+				04795F272B5E71B400661599 /* CoreDataManager.swift */,
+			);
+			path = Implementation;
+			sourceTree = "<group>";
+		};
+		04795F2F2B5E799200661599 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				04795F3B2B5E7BA600661599 /* ChattingRoomModel.swift */,
+				04795F302B5E799F00661599 /* Model.xcdatamodeld */,
+				04795F332B5E7B0000661599 /* ChattingRoomEntity+CoreDataClass.swift */,
+				04795F342B5E7B0000661599 /* ChattingRoomEntity+CoreDataProperties.swift */,
+				04795F352B5E7B0000661599 /* MessageEntity+CoreDataClass.swift */,
+				04795F362B5E7B0000661599 /* MessageEntity+CoreDataProperties.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		04A486362B5CFAAE009E6943 /* PromptSettingView */ = {
@@ -403,17 +459,22 @@
 				045295522B4BFCED000A5FD1 /* JSONDecoder+Extension.swift in Sources */,
 				0452954F2B4BFCED000A5FD1 /* JSONDecodable.swift in Sources */,
 				045295582B4BFD69000A5FD1 /* NetworkManager.swift in Sources */,
+				04795F392B5E7B0000661599 /* MessageEntity+CoreDataClass.swift in Sources */,
 				045295532B4BFCED000A5FD1 /* JSONEncodeManager.swift in Sources */,
 				0452954B2B4BFCED000A5FD1 /* HTTPMethodType.swift in Sources */,
 				0452948F2B44F058000A5FD1 /* ResponseModel.swift in Sources */,
+				04795F282B5E71B400661599 /* CoreDataManager.swift in Sources */,
 				045DE5FF2B515B7D002B426C /* MessageCell.swift in Sources */,
 				B4B3E2C12B42D1BB00818B3C /* ChattingRoomViewController.swift in Sources */,
 				045295512B4BFCED000A5FD1 /* JSONEncoder+Extension.swift in Sources */,
+				04795F372B5E7B0000661599 /* ChattingRoomEntity+CoreDataClass.swift in Sources */,
 				B4B3E2BD2B42D1BB00818B3C /* AppDelegate.swift in Sources */,
 				045DE5F72B5108E6002B426C /* UIStackView+Extension.swift in Sources */,
+				04795F3C2B5E7BA600661599 /* ChattingRoomModel.swift in Sources */,
 				045295542B4BFCED000A5FD1 /* JSONDecodeManager.swift in Sources */,
 				046C251A2B5A485F00B5696D /* MessageViewContentConfiguration.swift in Sources */,
 				0452954D2B4BFCED000A5FD1 /* NetworkRequestBuilderProtocol.swift in Sources */,
+				04795F3A2B5E7B0000661599 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				04A930412B59119A002E4819 /* (null) in Sources */,
 				04A9300C2B55240B002E4819 /* MessageCellContentView.swift in Sources */,
 				0452954E2B4BFCED000A5FD1 /* NetworkRequestBuilder.swift in Sources */,
@@ -421,9 +482,12 @@
 				046C25182B5A485200B5696D /* MessageContentView.swift in Sources */,
 				A6AC5F5B2B5688E900AB7CAF /* MessageView.swift in Sources */,
 				045295502B4BFCED000A5FD1 /* JSONEncodable.swift in Sources */,
+				04795F322B5E799F00661599 /* Model.xcdatamodeld in Sources */,
 				04A9300A2B5523ED002E4819 /* MessageCellConfiguration.swift in Sources */,
 				B4B3E2BF2B42D1BB00818B3C /* SceneDelegate.swift in Sources */,
 				0452955D2B4E291F000A5FD1 /* GPTModel.swift in Sources */,
+				04795F262B5E6ED900661599 /* CoreDataManagable.swift in Sources */,
+				04795F382B5E7B0000661599 /* ChattingRoomEntity+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -648,6 +712,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		04795F302B5E799F00661599 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				04795F312B5E799F00661599 /* Model.xcdatamodel */,
+			);
+			currentVersion = 04795F312B5E799F00661599 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B4B3E2B12B42D1BB00818B3C /* Project object */;
 }
