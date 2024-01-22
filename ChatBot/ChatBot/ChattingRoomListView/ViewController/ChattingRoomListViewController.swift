@@ -56,7 +56,15 @@ extension ChattingRoomListViewController {
     }
     
     private struct Item: Hashable {
-        let id: String
+        let chattingRoomModel: ChattingRoomModel
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(chattingRoomModel.id)
+        }
+        
+        static func == (lhs: ChattingRoomListViewController.Item, rhs: ChattingRoomListViewController.Item) -> Bool {
+            return lhs.chattingRoomModel.id == rhs.chattingRoomModel.id
+        }
     }
 }
 
@@ -81,8 +89,20 @@ extension ChattingRoomListViewController {
     
     private func configureDataSource() {
         let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Item> { cell, indexPath, itemIdentifier in
-            
+            var configuration = cell.defaultContentConfiguration()
+            configuration.text = itemIdentifier.chattingRoomModel.title
+            configuration.secondaryText = formatter.string(for: itemIdentifier.chattingRoomModel.date)
+            cell.contentConfiguration = configuration
         }
+        
+        // TODO: data source
+    }
+}
+
+// MARK: UICollectionViewDelegate Confirmation
+extension ChattingRoomListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        <#code#>
     }
 }
 
