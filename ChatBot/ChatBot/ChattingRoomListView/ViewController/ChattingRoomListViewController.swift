@@ -22,9 +22,11 @@ final class ChattingRoomListViewController: UIViewController {
     
     // MARK: Dependencies
     private let networkManager: NetworkRequestable!
+    private let coreDataManager: CoreDataManagable!
     
-    init(networkManager: NetworkRequestable) {
+    init(networkManager: NetworkRequestable, coreDataManager: CoreDataManagable) {
         self.networkManager = networkManager
+        self.coreDataManager = coreDataManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -91,7 +93,7 @@ extension ChattingRoomListViewController {
         let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Item> { cell, indexPath, itemIdentifier in
             var configuration = cell.defaultContentConfiguration()
             configuration.text = itemIdentifier.chattingRoomModel.title
-            configuration.secondaryText = formatter.string(for: itemIdentifier.chattingRoomModel.date)
+            configuration.secondaryText = itemIdentifier.chattingRoomModel.date.formatted(date: .numeric, time: .complete)
             cell.contentConfiguration = configuration
         }
         

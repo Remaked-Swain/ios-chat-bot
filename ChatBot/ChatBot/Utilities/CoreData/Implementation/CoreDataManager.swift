@@ -2,15 +2,16 @@ import CoreData
 
 //final class CoreDataManager: CoreDataManagable {
 //    private let container: NSPersistentContainer = {
-//        let container = NSPersistentContainer(name: <#T##String#>)
+//        let container = NSPersistentContainer(name: "Model")
 //        container.loadPersistentStores { description, error in
-//            guard error == nil else { return }
-//            
+//            if let error = error {
+//                fatalError("Failed to load container")
+//            }
 //        }
 //    }()
 //    
 //    var context: NSManagedObjectContext
-//    
+//
 //    func create() {
 //        <#code#>
 //    }
