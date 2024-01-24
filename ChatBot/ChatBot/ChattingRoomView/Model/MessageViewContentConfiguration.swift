@@ -1,8 +1,8 @@
 import UIKit
 
 struct MessageViewContentConfiguration: UIContentConfiguration, Hashable {
-    var text: String? = nil
-    var role: Role? = nil
+    var text: String?
+    var role: Role?
     
     func makeContentView() -> UIView & UIContentView {
         return MessageContentView()

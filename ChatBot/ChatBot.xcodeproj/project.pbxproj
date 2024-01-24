@@ -29,13 +29,14 @@
 		046C25182B5A485200B5696D /* MessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046C25172B5A485200B5696D /* MessageContentView.swift */; };
 		046C251A2B5A485F00B5696D /* MessageViewContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046C25192B5A485F00B5696D /* MessageViewContentConfiguration.swift */; };
 		04795F262B5E6ED900661599 /* CoreDataManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04795F252B5E6ED900661599 /* CoreDataManagable.swift */; };
-		04795F282B5E71B400661599 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04795F272B5E71B400661599 /* CoreDataManager.swift */; };
+		04795F282B5E71B400661599 /* CoreDataContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04795F272B5E71B400661599 /* CoreDataContainer.swift */; };
 		04795F322B5E799F00661599 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04795F302B5E799F00661599 /* Model.xcdatamodeld */; };
 		04795F372B5E7B0000661599 /* ChattingRoomEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04795F332B5E7B0000661599 /* ChattingRoomEntity+CoreDataClass.swift */; };
 		04795F382B5E7B0000661599 /* ChattingRoomEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04795F342B5E7B0000661599 /* ChattingRoomEntity+CoreDataProperties.swift */; };
 		04795F392B5E7B0000661599 /* MessageEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04795F352B5E7B0000661599 /* MessageEntity+CoreDataClass.swift */; };
 		04795F3A2B5E7B0000661599 /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04795F362B5E7B0000661599 /* MessageEntity+CoreDataProperties.swift */; };
 		04795F3C2B5E7BA600661599 /* ChattingRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04795F3B2B5E7BA600661599 /* ChattingRoomModel.swift */; };
+		04795F422B5FEE3300661599 /* CoreDataContainerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04795F412B5FEE3300661599 /* CoreDataContainerProtocol.swift */; };
 		04A9300A2B5523ED002E4819 /* MessageCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A930092B5523ED002E4819 /* MessageCellConfiguration.swift */; };
 		04A9300C2B55240B002E4819 /* MessageCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A9300B2B55240B002E4819 /* MessageCellContentView.swift */; };
 		04A9303F2B590F4E002E4819 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -73,13 +74,14 @@
 		046C25172B5A485200B5696D /* MessageContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageContentView.swift; sourceTree = "<group>"; };
 		046C25192B5A485F00B5696D /* MessageViewContentConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewContentConfiguration.swift; sourceTree = "<group>"; };
 		04795F252B5E6ED900661599 /* CoreDataManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagable.swift; sourceTree = "<group>"; };
-		04795F272B5E71B400661599 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		04795F272B5E71B400661599 /* CoreDataContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataContainer.swift; sourceTree = "<group>"; };
 		04795F312B5E799F00661599 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		04795F332B5E7B0000661599 /* ChattingRoomEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChattingRoomEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		04795F342B5E7B0000661599 /* ChattingRoomEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChattingRoomEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		04795F352B5E7B0000661599 /* MessageEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		04795F362B5E7B0000661599 /* MessageEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		04795F3B2B5E7BA600661599 /* ChattingRoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingRoomModel.swift; sourceTree = "<group>"; };
+		04795F412B5FEE3300661599 /* CoreDataContainerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataContainerProtocol.swift; sourceTree = "<group>"; };
 		04A930092B5523ED002E4819 /* MessageCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellConfiguration.swift; sourceTree = "<group>"; };
 		04A9300B2B55240B002E4819 /* MessageCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellContentView.swift; sourceTree = "<group>"; };
 		A60A086B2B4BFE410027A6F7 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				04795F252B5E6ED900661599 /* CoreDataManagable.swift */,
+				04795F412B5FEE3300661599 /* CoreDataContainerProtocol.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -275,7 +278,7 @@
 		04795F242B5E6EB700661599 /* Implementation */ = {
 			isa = PBXGroup;
 			children = (
-				04795F272B5E71B400661599 /* CoreDataManager.swift */,
+				04795F272B5E71B400661599 /* CoreDataContainer.swift */,
 			);
 			path = Implementation;
 			sourceTree = "<group>";
@@ -463,7 +466,7 @@
 				045295532B4BFCED000A5FD1 /* JSONEncodeManager.swift in Sources */,
 				0452954B2B4BFCED000A5FD1 /* HTTPMethodType.swift in Sources */,
 				0452948F2B44F058000A5FD1 /* ResponseModel.swift in Sources */,
-				04795F282B5E71B400661599 /* CoreDataManager.swift in Sources */,
+				04795F282B5E71B400661599 /* CoreDataContainer.swift in Sources */,
 				045DE5FF2B515B7D002B426C /* MessageCell.swift in Sources */,
 				B4B3E2C12B42D1BB00818B3C /* ChattingRoomViewController.swift in Sources */,
 				045295512B4BFCED000A5FD1 /* JSONEncoder+Extension.swift in Sources */,
@@ -476,6 +479,7 @@
 				0452954D2B4BFCED000A5FD1 /* NetworkRequestBuilderProtocol.swift in Sources */,
 				04795F3A2B5E7B0000661599 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				04A930412B59119A002E4819 /* (null) in Sources */,
+				04795F422B5FEE3300661599 /* CoreDataContainerProtocol.swift in Sources */,
 				04A9300C2B55240B002E4819 /* MessageCellContentView.swift in Sources */,
 				0452954E2B4BFCED000A5FD1 /* NetworkRequestBuilder.swift in Sources */,
 				04A9303F2B590F4E002E4819 /* (null) in Sources */,

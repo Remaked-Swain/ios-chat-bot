@@ -14,7 +14,7 @@ final class ChattingRoomViewController: UIViewController {
     }
     
     // MARK: View Components
-    private lazy var chattingRoomView: UICollectionView! = {
+    private lazy var chattingRoomView: UICollectionView = {
         let chattingRoomView = UICollectionView(frame: view.bounds, collectionViewLayout: configureLayout())
         chattingRoomView.translatesAutoresizingMaskIntoConstraints = false
         chattingRoomView.allowsSelection = false
@@ -22,7 +22,7 @@ final class ChattingRoomViewController: UIViewController {
         return chattingRoomView
     }()
     
-    private lazy var messageTextView: UITextView! = {
+    private lazy var messageTextView: UITextView = {
         let textView = UITextView(frame: view.bounds)
         textView.isScrollEnabled = false
         textView.autocapitalizationType = .none
@@ -34,7 +34,7 @@ final class ChattingRoomViewController: UIViewController {
         return textView
     }()
     
-    private lazy var messageSendButton: UIButton! = {
+    private lazy var messageSendButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.cornerStyle = .capsule
         configuration.image = UIImage(systemName: Constants.buttonImageName)
@@ -47,15 +47,17 @@ final class ChattingRoomViewController: UIViewController {
     }()
     
     // MARK: Properties
-    private var dataSource: DataSource! = nil
-    private var snapshot: Snapshot! = Snapshot()
+    private var dataSource: DataSource? = nil
+    private var snapshot: Snapshot = Snapshot()
+    private var messages: [Message]? = nil
     
     // MARK: Dependencies
-    private let networkManager: NetworkRequestable!
+    private let networkManager: NetworkRequestable
     
-    init(networkManager: NetworkRequestable) {
+    init(networkManager: NetworkRequestable, messages: [Message]?) {
         self.networkManager = networkManager
         super.init(nibName: nil, bundle: nil)
+        self.messages = messages
     }
     
     required init?(coder: NSCoder) {
@@ -80,7 +82,9 @@ extension ChattingRoomViewController: UITextViewDelegate {
         let estimatedSize = textView.sizeThatFits(size)
         let _ = textView.layoutManager.usedRect(for: textView.textContainer)
         
-        scrollToBottom(itemsCount: snapshot.numberOfItems, sectionsCount: snapshot.numberOfSections)
+        if let messagesCount = messages?.count {
+            scrollToBottom(itemsCount: messagesCount, sectionsCount: dataSource?.numberOfSections(in: chattingRoomView) ?? Section.allCases.count)
+        }
 
         textView.constraints.forEach { (constraint) in
             if constraint.firstAttribute == .height {
@@ -112,11 +116,12 @@ extension ChattingRoomViewController {
     
     private func submitMessage(role: Role, text: String) {
         let message = Message(role: role, content: text)
-        updateDataSource(with: message)
+        appendItemToDataSource(with: message)
     }
     
-    private func prepareToSend(_ messages: [Message], to gptModel: GPTModel) -> NetworkRequestBuilderProtocol {
-        let requestModel = RequestModel(model: gptModel, messages: messages, stream: false)
+    private func initializeBuilder(to gptModel: GPTModel) -> NetworkRequestBuilderProtocol {
+        let messages = snapshot.itemIdentifiers.map { $0.message }
+        let requestModel = RequestModel(model: gptModel, messages: messages[0..<messages.count - 1].map{$0}, stream: false)
         let endpoint = EndpointType.chatCompletion(apiKey: Bundle.main.APIKey)
         var builder: NetworkRequestBuilderProtocol = NetworkRequestBuilder(jsonEncodeManager: JSONEncodeManager(), endpoint: endpoint)
         builder.setHttpHeaderFields(httpHeaderFields: endpoint.header)
@@ -126,23 +131,22 @@ extension ChattingRoomViewController {
     }
     
     private func sendMessageToGPT() {
-        let messages = snapshot.itemIdentifiers[0..<snapshot.numberOfItems - 1].map{ $0.message }
-        let builder = prepareToSend(messages, to: .gpt_3_5_turbo)
+        let builder = initializeBuilder(to: .gpt_3_5_turbo)
         do {
             let request = try builder.build()
             Task {
                 do {
-                    let responseModel = try await networkManager?.request(urlRequest: request)
-                    guard let newMessage = responseModel?.choices.first?.message else { return }
-                    reloadCurrentDataSource(with: newMessage)
+                    let responseModel = try await networkManager.request(urlRequest: request)
+                    guard let newMessage = responseModel.choices.first?.message else { return }
+                    reconfigureCurrentDataSource(with: newMessage)
                 } catch {
                     guard let error = error as? NetworkManager.NetworkError else { return }
-                    reloadCurrentDataSource(with: Message(role: .assistant, content: error.debugDescription))
+                    reconfigureCurrentDataSource(with: Message(role: .assistant, content: error.debugDescription))
                 }
             }
         } catch {
             guard let error = error as? NetworkRequestBuilder.NetworkBuilderError else { return }
-            reloadCurrentDataSource(with: Message(role: .assistant, content: error.debugDescription))
+            reconfigureCurrentDataSource(with: Message(role: .assistant, content: error.debugDescription))
         }
     }
     
@@ -176,8 +180,7 @@ extension ChattingRoomViewController {
             return cell
         }
         
-        snapshot.appendSections(Section.allCases)
-        dataSource.apply(snapshot, animatingDifferences: true)
+        initializeDataSource(with: messages ?? [])
     }
     
     private func configureDelegate() {
@@ -209,33 +212,34 @@ extension ChattingRoomViewController {
         }
     }
     
-    private func updateDataSource(with messages: [Message?]) {
+    private func initializeDataSource(with messages: [Message?]) {
         let items: [Item] = messages.compactMap { message in
             guard let message = message else { return nil }
             return Item(message: message)
         }
         
+        snapshot.appendSections(Section.allCases)
         snapshot.appendItems(items)
-        dataSource.apply(snapshot, animatingDifferences: true)
+        dataSource?.apply(snapshot, animatingDifferences: true)
         
         scrollToBottom(itemsCount: snapshot.numberOfItems, sectionsCount: snapshot.numberOfSections)
     }
     
-    private func updateDataSource(with message: Message) {
+    private func appendItemToDataSource(with message: Message) {
         let item = Item(message: message)
         
         snapshot.appendItems([item])
-        dataSource.apply(snapshot, animatingDifferences: true)
+        dataSource?.apply(snapshot, animatingDifferences: true)
         
         scrollToBottom(itemsCount: snapshot.numberOfItems, sectionsCount: snapshot.numberOfSections)
     }
     
-    private func reloadCurrentDataSource(with message: Message) {
+    private func reconfigureCurrentDataSource(with message: Message) {
         guard let lastItem = snapshot.itemIdentifiers.last else { return }
         let newItem = Item(message: message)
         snapshot.deleteItems([lastItem])
         snapshot.appendItems([newItem])
-        dataSource.apply(snapshot, animatingDifferences: true)
+        dataSource?.apply(snapshot, animatingDifferences: true)
         messageTextView.isEditable = true
     }
     

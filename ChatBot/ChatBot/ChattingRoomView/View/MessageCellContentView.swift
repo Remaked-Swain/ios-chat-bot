@@ -3,10 +3,9 @@ import UIKit
 final class MessageCellContentView: UIView, UIContentView {
     private enum Constants {
         static let labelWidthRatio: CGFloat = 2/3
-        static let defaultMargin: CGFloat = 10
     }
     
-    private lazy var messageView: MessageView! = {
+    private lazy var messageView: MessageView = {
         let messageView = MessageView(configuration: MessageViewContentConfiguration())
         addSubview(messageView)
         messageView.backgroundColor = .clear
@@ -24,14 +23,14 @@ final class MessageCellContentView: UIView, UIContentView {
         }
     }
     
-    private var leading: NSLayoutConstraint? = nil
-    private var trailing: NSLayoutConstraint? = nil
+    private var leadingConstraint: NSLayoutConstraint?
+    private var trailingConstraint: NSLayoutConstraint?
     
     init(configuration: MessageCellContentConfiguration) {
         super.init(frame: .zero)
         
-        leading = messageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constants.defaultMargin)
-        trailing = messageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constants.defaultMargin)
+        leadingConstraint = messageView.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor)
+        trailingConstraint = messageView.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor)
         
         apply(configuration: configuration)
     }
@@ -62,21 +61,20 @@ extension MessageCellContentView {
 // MARK: Autolayout Methods
 extension MessageCellContentView {
     private func setUpConstraintsByRole() {
-        let margin = Constants.defaultMargin
         let labelWidthRatio = Constants.labelWidthRatio
         
         NSLayoutConstraint.activate([
-            messageView.topAnchor.constraint(equalTo: self.topAnchor, constant: margin),
-            messageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -margin),
+            messageView.topAnchor.constraint(equalTo: self.layoutMarginsGuide.topAnchor),
+            messageView.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor),
             messageView.widthAnchor.constraint(lessThanOrEqualTo: self.widthAnchor, multiplier: labelWidthRatio)
         ])
         
         if appliedConfiguration.role == .user {
-            leading?.isActive = false
-            trailing?.isActive = true
+            leadingConstraint?.isActive = false
+            trailingConstraint?.isActive = true
         } else {
-            leading?.isActive = true
-            trailing?.isActive = false
+            leadingConstraint?.isActive = true
+            trailingConstraint?.isActive = false
         }
     }
 }
