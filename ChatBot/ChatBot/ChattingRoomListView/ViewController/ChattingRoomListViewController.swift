@@ -160,7 +160,7 @@ extension ChattingRoomListViewController: ChattingRoomViewControllerCoreDataDele
         }
     }
     
-    func create(chattingRoomModel: ChattingRoomModel) {
+    func create(_ chattingRoomViewController: ChattingRoomViewController, with chattingRoomModel: ChattingRoomModel) {
         let context = coreDataManager.context
         let chattingRoomEntity = ChattingRoomEntity(context: context)
         
@@ -182,7 +182,7 @@ extension ChattingRoomListViewController: ChattingRoomViewControllerCoreDataDele
         coreDataManager.save()
     }
     
-    func update(chattingRoomModel: ChattingRoomModel) {
+    func update(_ chattingRoomViewController: ChattingRoomViewController, with chattingRoomModel: ChattingRoomModel) {
         let chattingRoomRequest = ChattingRoomEntity.fetchRequest()
         chattingRoomRequest.predicate = NSPredicate(format: "id == %@", chattingRoomModel.id)
         let chattingRoomEntities = coreDataManager.fetch(chattingRoomRequest)

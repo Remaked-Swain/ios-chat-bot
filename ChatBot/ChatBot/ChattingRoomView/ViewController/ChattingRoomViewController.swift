@@ -81,11 +81,11 @@ final class ChattingRoomViewController: UIViewController {
         if let chattingRoomModel = chattingRoomModel {
             let updateChattingRoomModel = ChattingRoomModel(id: chattingRoomModel.id, title: chattingRoomModel.title, date: chattingRoomModel.date, messages: messages)
             delegate?.appendDataSource(self, with: updateChattingRoomModel)
-            delegate?.update(chattingRoomModel: updateChattingRoomModel)
+            delegate?.update(self, with: updateChattingRoomModel)
         } else {
             let newChattingRoomModel = ChattingRoomModel(id: UUID().uuidString, title: title ?? "새로운 채팅방", date: Date.now, messages: messages)
             delegate?.appendDataSource(self, with: newChattingRoomModel)
-            delegate?.create(chattingRoomModel: newChattingRoomModel)
+            delegate?.create(self, with: newChattingRoomModel)
         }
     }
 }
