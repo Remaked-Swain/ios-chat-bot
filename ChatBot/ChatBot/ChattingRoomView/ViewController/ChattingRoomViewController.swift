@@ -260,9 +260,7 @@ extension ChattingRoomViewController {
     }
     
     private func scrollToBottom(itemsCount: Int, sectionsCount: Int, at position: UICollectionView.ScrollPosition = .bottom) {
-        guard itemsCount > 0,
-              sectionsCount > 0
-        else { return }
+        guard itemsCount > 0, sectionsCount > 0 else { return }
         chattingRoomView.scrollToItem(at: IndexPath(item: itemsCount - 1, section: sectionsCount - 1), at: position, animated: true)
     }
 }
