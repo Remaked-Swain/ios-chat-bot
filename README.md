@@ -51,7 +51,7 @@
 
 | 채팅 화면 | 긴 채팅 | 동적 입력창 |
 |:-------:|:-------:|:-------:|
-| <img src="https://github.com/tasty-code/ios-chat-bot/assets/46235301/2cdae929-1ea2-4746-908b-4d86f2fb5da9" alt="chat" width="300px"> |  ![2  long story](https://github.com/tasty-code/ios-chat-bot/assets/46235301/bd68cc95-0d2f-45db-8c2c-e4a9dcd83967) |  ![3  keyboard and dynamic text view](https://github.com/tasty-code/ios-chat-bot/assets/46235301/8307a587-0b50-4d40-87ad-8f7a87d9c57d) |
+| <img src="https://github.com/tasty-code/ios-chat-bot/assets/46235301/2cdae929-1ea2-4746-908b-4d86f2fb5da9" alt="chat" width="295px" height="640px"> |  ![2  long story](https://github.com/tasty-code/ios-chat-bot/assets/46235301/bd68cc95-0d2f-45db-8c2c-e4a9dcd83967) |  ![3  keyboard and dynamic text view](https://github.com/tasty-code/ios-chat-bot/assets/46235301/8307a587-0b50-4d40-87ad-8f7a87d9c57d) |
 
 | 사용자 입력시 화면이 이동 | 에러 발생 후 채팅 재요청 |
 |:-------:|:-------:|
