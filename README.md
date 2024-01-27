@@ -25,7 +25,7 @@
 - [x] Request 및 Response를 위한 데이터 모델 설명
 - [x] CodingKeys 프로토콜의 활용
 - [x] Swift Concurrency: URL Session을 활용한 서버와의 통신
-- [x] `async`, `await`을 활용한 비동기 처리
+    - [x] `async`, `await`을 활용한 비동기 처리
 - [x] Builder pattern 활용
 - [x] Safe Area을 고려한 오토레이아웃 구현
 - [x] `UICollectionView`
