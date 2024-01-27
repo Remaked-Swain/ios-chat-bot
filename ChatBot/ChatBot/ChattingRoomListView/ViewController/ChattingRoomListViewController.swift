@@ -1,11 +1,4 @@
 import UIKit
-import CoreData
-
-protocol ChattingRoomViewControllerCoreDataDelegate: AnyObject {
-    func appendDataSource(_ chattingRoomViewController: ChattingRoomViewController, with chattingRoomModel: ChattingRoomModel)
-    func create(chattingRoomModel: ChattingRoomModel)
-    func update(chattingRoomModel: ChattingRoomModel)
-}
 
 final class ChattingRoomListViewController: UIViewController {
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
@@ -84,7 +77,7 @@ extension ChattingRoomListViewController {
 }
 
 // MARK: ChattingRoomListView Configuration Methods
-extension ChattingRoomListViewController: ChattingRoomViewControllerCoreDataDelegate {
+extension ChattingRoomListViewController {
     private func configureNavigationBar() {
         let navigationTitle = "MyChatBot"
         let rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: Constants.buttonImageName), style: .plain, target: self, action: #selector(pushToNewChattingRoomViewController))
@@ -137,7 +130,7 @@ extension ChattingRoomListViewController: ChattingRoomViewControllerCoreDataDele
 }
 
 // MARK: CoreData
-extension ChattingRoomListViewController {
+extension ChattingRoomListViewController: ChattingRoomViewControllerCoreDataDelegate {
     private func read() -> [ChattingRoomModel]? {
         let ChattingRooms = convertToChattingRoomModel()
         return ChattingRooms.map { chattingRoom in
