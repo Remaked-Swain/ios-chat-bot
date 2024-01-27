@@ -1,17 +1,17 @@
-//
-//  SceneDelegate.swift
-//  ChatBot
-//
-//  Created by Tacocat on 1/1/24.
-//
-
 import UIKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
+    private let networkManager: NetworkRequestable = NetworkManager()
+    private let coreDataManager: CoreDataManagable = CoreDataManager()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: windowScene)
+        let chattingRoomListViewController = ChattingRoomListViewController(networkManager: networkManager, coreDataManager: coreDataManager)
+        let navigationController = UINavigationController(rootViewController: chattingRoomListViewController)
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) { }

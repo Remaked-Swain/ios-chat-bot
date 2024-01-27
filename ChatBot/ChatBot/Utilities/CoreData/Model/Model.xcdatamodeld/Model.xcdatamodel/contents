@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22222" systemVersion="23C71" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="ChattingRoomEntity" representedClassName="ChattingRoomEntity" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="messageRelationship" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MessageEntity" inverseName="chattingRoomRelationship" inverseEntity="MessageEntity"/>
+    </entity>
+    <entity name="MessageEntity" representedClassName="MessageEntity" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="role" optional="YES" attributeType="String"/>
+        <relationship name="chattingRoomRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChattingRoomEntity" inverseName="messageRelationship" inverseEntity="ChattingRoomEntity"/>
+    </entity>
+</model>
