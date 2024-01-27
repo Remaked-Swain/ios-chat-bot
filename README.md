@@ -31,7 +31,9 @@
 - [x] `UICollectionView`
 - [x] `DiffableDataSource`
 - [x] `UICollectionViewCompositionalLayout`
-- [x] Modern Cell Configuration - `defaultContentConfiguration()` 대신 CustomConfiguration으로 구현
+- [x] Modern Cell Configuration
+    - [x] `ChattingRoomListViewController` - `defaultContentConfiguration()`
+    - [x] `ChattingRoomViewController` - CustomConfiguration으로 구현
 - [x] cell의 재사용
 - [x] Core Animation: `CALayer`, `CAReplicatorLayer` - 로딩 표시
 - [x] `UIBezierPath`, `CAShapeLayer` - 말풍선 표시
