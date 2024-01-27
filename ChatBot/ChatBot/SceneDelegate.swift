@@ -8,7 +8,9 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = ChattingRoomListViewController(networkManager: networkManager, coreDataManager: coreDataManager)
+        let chattingRoomListViewController = ChattingRoomListViewController(networkManager: networkManager, coreDataManager: coreDataManager)
+        let navigationController = UINavigationController(rootViewController: chattingRoomListViewController)
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 
