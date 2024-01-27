@@ -1,21 +1,13 @@
 import CoreData
 
-protocol CoreDataCreatable {
-    func create()
+protocol CoreDataSaveable {
+    func save()
 }
 
-protocol CoreDataReadable {
-    func read()
+protocol CoreDataFetchable {
+    func fetch<T>(_ request: NSFetchRequest<T>) -> [T] where T : NSFetchRequestResult
 }
 
-protocol CoreDataUpdatable {
-    func update()
-}
-
-protocol CoreDataDeletable {
-    func delete()
-}
-
-protocol CoreDataManagable: CoreDataCreatable & CoreDataReadable & CoreDataUpdatable & CoreDataDeletable {
+protocol CoreDataManagable: CoreDataSaveable & CoreDataFetchable {
     var context: NSManagedObjectContext { get }
 }

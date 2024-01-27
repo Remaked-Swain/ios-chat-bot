@@ -47,17 +47,18 @@ final class ChattingRoomViewController: UIViewController {
     }()
     
     // MARK: Properties
-    private var dataSource: DataSource? = nil
+    private var dataSource: DataSource?
     private var snapshot: Snapshot = Snapshot()
-    private var messages: [Message]? = nil
+    private var chattingRoomModel: ChattingRoomModel?
     
     // MARK: Dependencies
     private let networkManager: NetworkRequestable
+    weak var delegate: ChattingRoomViewControllerCoreDataDelegate?
     
-    init(networkManager: NetworkRequestable, messages: [Message]?) {
+    init(networkManager: NetworkRequestable, chattingRoomModel: ChattingRoomModel?) {
         self.networkManager = networkManager
+        self.chattingRoomModel = chattingRoomModel
         super.init(nibName: nil, bundle: nil)
-        self.messages = messages
     }
     
     required init?(coder: NSCoder) {
@@ -72,6 +73,21 @@ final class ChattingRoomViewController: UIViewController {
         configureDataSource()
         configureDelegate()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        let messages = snapshot.itemIdentifiers.map { $0.message }
+        let title = messages.first?.content
+        
+        if let chattingRoomModel = chattingRoomModel {
+            let updateChattingRoomModel = ChattingRoomModel(id: chattingRoomModel.id, title: chattingRoomModel.title, date: chattingRoomModel.date, messages: messages)
+            delegate?.appendDataSource(self, with: updateChattingRoomModel)
+            delegate?.update(chattingRoomModel: updateChattingRoomModel)
+        } else {
+            let newChattingRoomModel = ChattingRoomModel(id: UUID().uuidString, title: title ?? "새로운 채팅방", date: Date.now, messages: messages)
+            delegate?.appendDataSource(self, with: newChattingRoomModel)
+            delegate?.create(chattingRoomModel: newChattingRoomModel)
+        }
+    }
 }
 
 // MARK: TextView Delegate Methods
@@ -82,7 +98,7 @@ extension ChattingRoomViewController: UITextViewDelegate {
         let estimatedSize = textView.sizeThatFits(size)
         let _ = textView.layoutManager.usedRect(for: textView.textContainer)
         
-        if let messagesCount = messages?.count {
+        if let messagesCount = chattingRoomModel?.messages.count {
             scrollToBottom(itemsCount: messagesCount, sectionsCount: dataSource?.numberOfSections(in: chattingRoomView) ?? Section.allCases.count)
         }
 
@@ -180,7 +196,7 @@ extension ChattingRoomViewController {
             return cell
         }
         
-        initializeDataSource(with: messages ?? [])
+        initializeDataSource(with: chattingRoomModel?.messages ?? [])
     }
     
     private func configureDelegate() {

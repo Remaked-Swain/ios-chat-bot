@@ -1,11 +1,3 @@
-//
-//  MessageEntity+CoreDataProperties.swift
-//  ChatBot
-//
-//  Created by Swain Yun on 1/22/24.
-//
-//
-
 import Foundation
 import CoreData
 
@@ -16,12 +8,9 @@ extension MessageEntity {
         return NSFetchRequest<MessageEntity>(entityName: "MessageEntity")
     }
 
-    @NSManaged public var role: String?
     @NSManaged public var content: String?
+    @NSManaged public var role: String?
+    @NSManaged public var date: Date?
     @NSManaged public var chattingRoomRelationship: ChattingRoomEntity?
-
-}
-
-extension MessageEntity : Identifiable {
 
 }

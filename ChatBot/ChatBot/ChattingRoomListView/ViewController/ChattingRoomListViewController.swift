@@ -1,4 +1,11 @@
 import UIKit
+import CoreData
+
+protocol ChattingRoomViewControllerCoreDataDelegate: AnyObject {
+    func appendDataSource(_ chattingRoomViewController: ChattingRoomViewController, with chattingRoomModel: ChattingRoomModel)
+    func create(chattingRoomModel: ChattingRoomModel)
+    func update(chattingRoomModel: ChattingRoomModel)
+}
 
 final class ChattingRoomListViewController: UIViewController {
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
@@ -10,19 +17,21 @@ final class ChattingRoomListViewController: UIViewController {
     }
     
     // MARK: View Components
-    private lazy var chattingRoomListView: UICollectionView! = {
+    private lazy var chattingRoomListView: UICollectionView = {
         let chattingRoomListView = UICollectionView(frame: view.bounds, collectionViewLayout: configureLayout())
         chattingRoomListView.translatesAutoresizingMaskIntoConstraints = false
+        chattingRoomListView.delegate = self
         return chattingRoomListView
     }()
     
     // MARK: Properties
-    private var dataSource: DataSource! = nil
-    private var snapshot: Snapshot! = Snapshot()
+    private var dataSource: DataSource?
+    private var snapshot: Snapshot = Snapshot()
+    private var chattingRoomModels: [ChattingRoomModel]?
     
     // MARK: Dependencies
-    private let networkManager: NetworkRequestable!
-    private let coreDataManager: CoreDataManagable!
+    private let networkManager: NetworkRequestable
+    private let coreDataManager: CoreDataManagable
     
     init(networkManager: NetworkRequestable, coreDataManager: CoreDataManagable) {
         self.networkManager = networkManager
@@ -36,6 +45,8 @@ final class ChattingRoomListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        chattingRoomModels = read()
         configureNavigationBar()
         configureHierarchy()
         configureConstraints()
@@ -46,7 +57,9 @@ final class ChattingRoomListViewController: UIViewController {
 // MARK: Private Methods
 extension ChattingRoomListViewController {
     @objc private func pushToNewChattingRoomViewController() {
-        let newChattingRoomViewController = ChattingRoomViewController(networkManager: networkManager)
+        let newChattingRoomViewController = ChattingRoomViewController(networkManager: networkManager,
+                                                                       chattingRoomModel: nil)
+        newChattingRoomViewController.delegate = self
         self.navigationController?.pushViewController(newChattingRoomViewController, animated: true)
     }
 }
@@ -71,7 +84,7 @@ extension ChattingRoomListViewController {
 }
 
 // MARK: ChattingRoomListView Configuration Methods
-extension ChattingRoomListViewController {
+extension ChattingRoomListViewController: ChattingRoomViewControllerCoreDataDelegate {
     private func configureNavigationBar() {
         let navigationTitle = "MyChatBot"
         let rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: Constants.buttonImageName), style: .plain, target: self, action: #selector(pushToNewChattingRoomViewController))
@@ -84,7 +97,7 @@ extension ChattingRoomListViewController {
     }
     
     private func configureLayout() -> UICollectionViewLayout {
-        var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
+        let configuration = UICollectionLayoutListConfiguration(appearance: .plain)
         let layout = UICollectionViewCompositionalLayout.list(using: configuration)
         return layout
     }
@@ -97,14 +110,123 @@ extension ChattingRoomListViewController {
             cell.contentConfiguration = configuration
         }
         
-        // TODO: data source
+        dataSource = DataSource(collectionView: chattingRoomListView) { collectionView, indexPath, itemIdentifier in
+            let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
+            return cell
+        }
+     
+        initializeDataSource(with: chattingRoomModels ?? [])
+    }
+    
+    private func initializeDataSource(with chattingRoomModels: [ChattingRoomModel]) {
+        let items: [Item] = chattingRoomModels.map { chattingRoomModel in
+            return Item(chattingRoomModel: chattingRoomModel)
+        }
+        
+        snapshot.appendSections(Section.allCases)
+        snapshot.appendItems(items)
+        dataSource?.apply(snapshot, animatingDifferences: true)
+    }
+    
+    func appendDataSource(_ chattingRoomViewController: ChattingRoomViewController, with chattingRoomModel: ChattingRoomModel) {
+        let item: Item = Item(chattingRoomModel: chattingRoomModel)
+        
+        snapshot.appendItems([item])
+        dataSource?.apply(snapshot, animatingDifferences: true)
+    }
+}
+
+// MARK: CoreData
+extension ChattingRoomListViewController {
+    private func read() -> [ChattingRoomModel]? {
+        let ChattingRooms = convertToChattingRoomModel()
+        return ChattingRooms.map { chattingRoom in
+            ChattingRoomModel(id: chattingRoom.id, title: chattingRoom.title, date: chattingRoom.date, messages: convertToMessageModel(id: chattingRoom.id))
+        }
+    }
+    
+    func convertToChattingRoomModel() -> [ChattingRoomModel] {
+        let request = ChattingRoomEntity.fetchRequest()
+        let chattingRoomEntities = coreDataManager.fetch(request)
+        
+        return chattingRoomEntities.compactMap { chattingRoomEntity in
+            chattingRoomEntity.toDTO()
+        }
+    }
+    
+    func convertToMessageModel(id: String) -> [Message] {
+        let messageRequest = MessageEntity.fetchRequest()
+        
+        messageRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+        messageRequest.predicate = NSPredicate(format: "chattingRoomRelationship.id == %@", id)
+        
+        let messageEntities = self.coreDataManager.fetch(messageRequest)
+        
+        return messageEntities.compactMap { messageEntity in
+            messageEntity.toDTO()
+        }
+    }
+    
+    
+    func create(chattingRoomModel: ChattingRoomModel) {
+        let context = coreDataManager.context
+        let chattingRoomEntity = ChattingRoomEntity(context: context)
+        
+        let messageEntities = chattingRoomModel.messages.map { message in
+            let messageEntity = MessageEntity(context: context)
+            messageEntity.role = message.role.rawValue
+            messageEntity.date = message.date
+            messageEntity.content = message.content
+            
+            return messageEntity
+        }
+        
+        chattingRoomEntity.id = chattingRoomModel.id
+        chattingRoomEntity.date = chattingRoomModel.date
+        chattingRoomEntity.title = chattingRoomModel.title
+
+        chattingRoomEntity.addToMessageRelationship(NSSet(array: messageEntities))
+        
+        coreDataManager.save()
+        
+        let request = NSFetchRequest<MessageEntity>(entityName: "MessageEntity")
+        let fetched = coreDataManager.fetch(request)
+    }
+    
+    func update(chattingRoomModel: ChattingRoomModel) {
+        let chattingRoomRequest = ChattingRoomEntity.fetchRequest()
+        chattingRoomRequest.predicate = NSPredicate(format: "id == %@", chattingRoomModel.id)
+        let chattingRoomEntities = coreDataManager.fetch(chattingRoomRequest)
+        guard let chattingRoomEntity = chattingRoomEntities.first else { return }
+        
+        let request = MessageEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "chattingRoomRelationship.id == %@", chattingRoomModel.id)
+        let messageEntities = coreDataManager.fetch(request)
+        
+        chattingRoomEntity.removeFromMessageRelationship(NSSet(array: messageEntities))
+        
+        let newMessageEntities = chattingRoomModel.messages.map { message in
+            let messageEntity = MessageEntity(context: coreDataManager.context)
+            messageEntity.role = message.role.rawValue
+            messageEntity.date = message.date
+            messageEntity.content = message.content
+            
+            return messageEntity
+        }
+        
+        chattingRoomEntity.addToMessageRelationship(NSSet(array: newMessageEntities))
+        
+        coreDataManager.save()
     }
 }
 
 // MARK: UICollectionViewDelegate Confirmation
 extension ChattingRoomListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        <#code#>
+        let chattingRoomModel = snapshot.itemIdentifiers[indexPath.row].chattingRoomModel
+        let chattingRoomViewController = ChattingRoomViewController(networkManager: networkManager, chattingRoomModel: chattingRoomModel)
+        chattingRoomViewController.delegate = self
+        navigationController?.pushViewController(chattingRoomViewController, animated: true)
     }
 }
 

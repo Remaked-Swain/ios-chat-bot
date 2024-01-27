@@ -1,11 +1,3 @@
-//
-//  ChattingRoomEntity+CoreDataProperties.swift
-//  ChatBot
-//
-//  Created by Swain Yun on 1/22/24.
-//
-//
-
 import Foundation
 import CoreData
 
@@ -16,9 +8,9 @@ extension ChattingRoomEntity {
         return NSFetchRequest<ChattingRoomEntity>(entityName: "ChattingRoomEntity")
     }
 
+    @NSManaged public var date: Date?
     @NSManaged public var id: String?
     @NSManaged public var title: String?
-    @NSManaged public var date: Date?
     @NSManaged public var messageRelationship: NSSet?
 
 }
@@ -37,9 +29,5 @@ extension ChattingRoomEntity {
 
     @objc(removeMessageRelationship:)
     @NSManaged public func removeFromMessageRelationship(_ values: NSSet)
-
-}
-
-extension ChattingRoomEntity : Identifiable {
 
 }
