@@ -145,7 +145,7 @@ extension ChattingRoomListViewController {
         }
     }
     
-    func convertToChattingRoomModel() -> [ChattingRoomModel] {
+    private func convertToChattingRoomModel() -> [ChattingRoomModel] {
         let request = ChattingRoomEntity.fetchRequest()
         let chattingRoomEntities = coreDataManager.fetch(request)
         
@@ -154,7 +154,7 @@ extension ChattingRoomListViewController {
         }
     }
     
-    func convertToMessageModel(id: String) -> [Message] {
+    private func convertToMessageModel(id: String) -> [Message] {
         let messageRequest = MessageEntity.fetchRequest()
         
         messageRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
@@ -189,7 +189,7 @@ extension ChattingRoomListViewController {
         
         coreDataManager.save()
         
-        let request = NSFetchRequest<MessageEntity>(entityName: "MessageEntity")
+        let request = MessageEntity.fetchRequest()
         let fetched = coreDataManager.fetch(request)
     }
     
