@@ -17,13 +17,13 @@ final class CoreDataManager: CoreDataManagable {
     }
     
     func save() {
-            guard context.hasChanges else { return }
+        guard context.hasChanges else { return }
         do {
-                try context.save()
-            } catch let error as NSError {
-                print(error, error.userInfo)
-            }
+            try context.save()
+        } catch let error as NSError {
+            print(error, error.userInfo)
         }
+    }
     
     func fetch<T>(_ request: NSFetchRequest<T>) -> [T] where T : NSFetchRequestResult {
         do {
