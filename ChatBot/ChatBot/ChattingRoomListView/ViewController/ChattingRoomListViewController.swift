@@ -188,9 +188,6 @@ extension ChattingRoomListViewController {
         chattingRoomEntity.addToMessageRelationship(NSSet(array: messageEntities))
         
         coreDataManager.save()
-        
-        let request = MessageEntity.fetchRequest()
-        let fetched = coreDataManager.fetch(request)
     }
     
     func update(chattingRoomModel: ChattingRoomModel) {
